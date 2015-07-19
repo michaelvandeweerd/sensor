@@ -1,6 +1,6 @@
-package net.michaelvandeweerd.hanze.sensor.exception;
+package net.michaelvandeweerd.sensor.exception;
 
-import net.michaelvandeweerd.hanze.sensor.data.Body;
+import net.michaelvandeweerd.sensor.data.Body;
 
 /**
  * Thrown when a body does not contain the joints or axis that it is expected to

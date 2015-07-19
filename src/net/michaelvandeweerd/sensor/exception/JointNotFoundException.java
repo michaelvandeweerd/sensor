@@ -1,6 +1,7 @@
-package net.michaelvandeweerd.hanze.sensor.exception;
+package net.michaelvandeweerd.sensor.exception;
 
-import net.michaelvandeweerd.hanze.sensor.data.Extreme;
+import net.michaelvandeweerd.sensor.data.Extreme;
+import net.michaelvandeweerd.sensor.data.Position;
 
 /**
  * Thrown when a joint specified by its name or an extreme it contains has not
@@ -22,9 +23,20 @@ public class JointNotFoundException extends Exception {
     private final static String NOT_FOUND_BY_EXTREME_MESSAGE = "Joint with node <EXTREME> has not been found";
 
     /**
+     * The message to be used when the joint was supposed to be found by a
+     * position.
+     */
+    private final static String NOT_FOUND_BY_POSITION_MESSAGE = "Joint with position <POSITION> has not been found";
+
+    /**
      * The extreme that is contained in the joint that was supposed to be found.
      */
     private Extreme extreme;
+
+    /**
+     * The position at which no joint was found.
+     */
+    private Position position;
 
     /**
      * Construct a joint not found exception.
@@ -47,6 +59,19 @@ public class JointNotFoundException extends Exception {
 		extreme.toString()));
 
 	this.extreme = extreme;
+    }
+
+    /**
+     * Construct a joint not found exception.
+     * 
+     * @param position
+     *            The position of the joint that has not been found.
+     */
+    public JointNotFoundException(Position position) {
+	super(NOT_FOUND_BY_POSITION_MESSAGE.replace("<POSITION>",
+		position.toString()));
+
+	this.position = position;
     }
 
     /**

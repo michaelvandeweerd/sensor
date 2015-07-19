@@ -1,4 +1,4 @@
-package net.michaelvandeweerd.hanze.sensor.data;
+package net.michaelvandeweerd.sensor.data;
 
 /**
  * A joint gives a position to multiple nodes.
@@ -62,6 +62,15 @@ public class Joint {
      */
     public Extreme[] getExtremes() {
 	return extremes;
+    }
+    
+    /**
+     * Set the position of the current joint.
+     * 
+     * @param position The new position of the current joint.
+     */
+    public void setPosition(Position position) {
+	this.position = position;
     }
 
     /**

@@ -1,11 +1,11 @@
-package net.michaelvandeweerd.hanze.sensor.data;
+package net.michaelvandeweerd.sensor.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.michaelvandeweerd.hanze.sensor.exception.AxisNotFoundException;
-import net.michaelvandeweerd.hanze.sensor.exception.BodyMalformedException;
-import net.michaelvandeweerd.hanze.sensor.exception.JointNotFoundException;
+import net.michaelvandeweerd.sensor.exception.AxisNotFoundException;
+import net.michaelvandeweerd.sensor.exception.BodyMalformedException;
+import net.michaelvandeweerd.sensor.exception.JointNotFoundException;
 
 /**
  * A collection of joints and axis, needed to calculate relations between both.
@@ -132,6 +132,23 @@ public class Body {
 		return joint;
 
 	throw new JointNotFoundException(extreme);
+    }
+    
+    /**
+     * Return the joint contained in the current body that is positioned at the specified position.
+     * 
+     * @param position The position that should be equal the the joint to be returned.
+     * @return The joint position at the specified position.
+     * @throws JointNotFoundException
+     * 		When no joint positioned at the specified position has been found.
+     */
+    public Joint getJointByPosition(Position position) throws JointNotFoundException {
+	// check every joint for a matching position
+	for(Joint joint : joints)
+	    if(joint.getPosition().equals(position))
+		return joint;
+	
+	throw new JointNotFoundException(position);
     }
 
     /**

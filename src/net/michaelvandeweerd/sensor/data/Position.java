@@ -1,4 +1,4 @@
-package net.michaelvandeweerd.hanze.sensor.data;
+package net.michaelvandeweerd.sensor.data;
 
 /**
  * A position in a three-dimensional space. This class also provides several
@@ -73,6 +73,22 @@ public class Position {
      */
     public double getZ() {
 	return z;
+    }
+
+    /**
+     * Return a boolean indicating wether or not the current position is equal
+     * to the specified object.
+     * 
+     * @param object
+     *            The object to which the current position is or is not equal.
+     * @return True if the current position is equals to the specified position,
+     *         otherwise false.
+     */
+    @Override
+    public boolean equals(Object object) {
+	return object instanceof Position && ((Position) object).getX() == x
+		&& ((Position) object).getY() == y
+		&& ((Position) object).getZ() == z;
     }
 
     /**

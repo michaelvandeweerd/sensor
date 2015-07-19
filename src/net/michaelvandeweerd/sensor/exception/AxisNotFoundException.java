@@ -1,6 +1,6 @@
-package net.michaelvandeweerd.hanze.sensor.exception;
+package net.michaelvandeweerd.sensor.exception;
 
-import net.michaelvandeweerd.hanze.sensor.data.Extreme;
+import net.michaelvandeweerd.sensor.data.Extreme;
 
 /**
  * Thrown when a axis specified by its name or an extreme it contains has not

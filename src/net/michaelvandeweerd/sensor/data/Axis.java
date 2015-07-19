@@ -1,4 +1,4 @@
-package net.michaelvandeweerd.hanze.sensor.data;
+package net.michaelvandeweerd.sensor.data;
 
 /**
  * An connection between two nodes.
