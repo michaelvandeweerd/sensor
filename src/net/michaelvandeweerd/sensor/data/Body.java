@@ -6,6 +6,7 @@ import java.util.List;
 import net.michaelvandeweerd.sensor.exception.AxisNotFoundException;
 import net.michaelvandeweerd.sensor.exception.BodyMalformedException;
 import net.michaelvandeweerd.sensor.exception.JointNotFoundException;
+import net.michaelvandeweerd.sensor.listener.BodyListener;
 
 /**
  * A collection of joints and axis, needed to calculate relations between both.
@@ -16,20 +17,17 @@ public class Body {
     /**
      * The axis' contained in the current body.
      */
-    private List<Axis> axiss;
+    private List<Axis> axiss = new ArrayList<Axis>();;
 
     /**
      * The joints contained in the current body.
      */
-    private List<Joint> joints;
+    private List<Joint> joints = new ArrayList<Joint>();;
 
     /**
-     * Construct a body.
+     * The objects listening to the current body.
      */
-    public Body() {
-	axiss = new ArrayList<Axis>();
-	joints = new ArrayList<Joint>();
-    }
+    private List<BodyListener> listeners = new ArrayList<BodyListener>();
 
     /**
      * Add the specified axis to the current body.
@@ -37,7 +35,7 @@ public class Body {
      * @param axis
      *            The axis to add to the current body.
      */
-    public void add(Axis axis) {
+    public void addAxis(Axis axis) {
 	axiss.add(axis);
     }
 
@@ -47,9 +45,11 @@ public class Body {
      * @param joint
      *            The joint to add to the body.
      */
-    public void add(Joint joint) {
+    public void addJoint(Joint joint) {
 	joints.add(joint);
     }
+    
+    // TODO updateJoints(Map<Joint, Positions>)
 
     /**
      * Return the axis contained in the current body with a name that matches
@@ -133,22 +133,51 @@ public class Body {
 
 	throw new JointNotFoundException(extreme);
     }
-    
+
     /**
-     * Return the joint contained in the current body that is positioned at the specified position.
+     * Return the joint contained in the current body that is positioned at the
+     * specified position.
      * 
-     * @param position The position that should be equal the the joint to be returned.
+     * @param position
+     *            The position that should be equal the the joint to be
+     *            returned.
      * @return The joint position at the specified position.
      * @throws JointNotFoundException
-     * 		When no joint positioned at the specified position has been found.
+     *             When no joint positioned at the specified position has been
+     *             found.
      */
-    public Joint getJointByPosition(Position position) throws JointNotFoundException {
+    public Joint getJointByPosition(Position position)
+	    throws JointNotFoundException {
 	// check every joint for a matching position
-	for(Joint joint : joints)
-	    if(joint.getPosition().equals(position))
+	for (Joint joint : joints)
+	    if (joint.getPosition().equals(position))
 		return joint;
-	
+
 	throw new JointNotFoundException(position);
+    }
+
+    /**
+     * Return the length of the specified axis.
+     * 
+     * @param axis
+     *            The axis of which the length is returned.
+     * @return The length of the specified axis.
+     * @throws BodyMalformedException
+     *             When the body does not contain the part needed to calculate
+     *             the length of the specified axis.
+     */
+    public double calculateLength(Axis axis) throws BodyMalformedException {
+	try {
+	    // retrieve the joints at the higher and lower end of the axis'
+	    Joint higher = getJointByExtreme(axis.getHigher());
+	    Joint lower = getJointByExtreme(axis.getLower());
+
+	    // return the length between the positions of the two joints
+	    return Position.calculateDistance(higher.getPosition(),
+		    lower.getPosition());
+	} catch (JointNotFoundException e) {
+	    throw new BodyMalformedException("Missing joint", this);
+	}
     }
 
     /**
@@ -178,26 +207,12 @@ public class Body {
     }
 
     /**
-     * Return the length of the specified axis.
+     * Add a body event listener to the current body.
      * 
-     * @param axis
-     *            The axis of which the length is returned.
-     * @return The length of the specified axis.
-     * @throws BodyMalformedException
-     *             When the body does not contain the part needed to calculate
-     *             the length of the specified axis.
+     * @param BodyListener
+     *            The object that needs to listen to the current body.
      */
-    public double calculateLength(Axis axis) throws BodyMalformedException {
-	try {
-	    // retrieve the joints at the higher and lower end of the axis'
-	    Joint higher = getJointByExtreme(axis.getHigher());
-	    Joint lower = getJointByExtreme(axis.getLower());
-
-	    // return the length between the positions of the two joints
-	    return Position.calculateDistance(higher.getPosition(),
-		    lower.getPosition());
-	} catch (JointNotFoundException e) {
-	    throw new BodyMalformedException("Missing joint", this);
-	}
+    public void addListener(BodyListener listener) {
+	listeners.add(listener);
     }
 }
