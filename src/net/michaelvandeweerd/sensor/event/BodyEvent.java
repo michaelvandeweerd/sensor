@@ -11,13 +11,14 @@ import net.michaelvandeweerd.sensor.data.Body;
  */
 public class BodyEvent extends EventObject {
 
-    /**
-     * Construct a body event.
-     * 
-     * @param source The body that fired the current event.
-     */
-    public BodyEvent(Body body) {
-	super(body);
-    }
+	/**
+	 * Construct a body event.
+	 * 
+	 * @param source
+	 *            The body that fired the current event.
+	 */
+	public BodyEvent(Body body) {
+		super(body);
+	}
 
 }

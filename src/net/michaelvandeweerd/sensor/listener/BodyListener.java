@@ -9,11 +9,11 @@ import net.michaelvandeweerd.sensor.event.BodyEvent;
  * @author Michaël van de Weerd
  */
 public interface BodyListener {
-    /**
-     * Called when the positions of the joints in the body are updated.
-     * 
-     * @param event
-     *            The body event containing a reference to the body.
-     */
-    public void jointPositionUpdated(BodyEvent event);
+	/**
+	 * Called when the positions of the joints in the body are updated.
+	 * 
+	 * @param event
+	 *            The body event containing a reference to the body.
+	 */
+	public void jointPositionUpdated(BodyEvent event);
 }
